@@ -9,6 +9,17 @@ const router = express.Router();
 // Define your routes here
 
 const user = new User(knex)
+router.get('/init/setup-master-password', async (req, res) => {
+	try {
+		if(!req.query.password) throw new Error('error setup!')
+		const authen = new Authen(user);
+		const result = await authen.register("master", req.query.password, "master", "master@master.com", "master", "master", "", "");
+		return res.status(200).json({ success: true, data: result });
+	} catch (error) {
+		console.error(error);
+		return res.status(500).json({ success: false, error: error.message });
+	}
+});
 router.use(verifyJWT)
 router.get('/profile', async (req, res) => {
 	return res.status(200).json({ success: true, data: req.user });
@@ -75,4 +86,5 @@ router.post('/delete', async (req, res) => {
 		return res.status(500).json({ success: false, error: error.message });
 	}
 });
+
 module.exports = router;
