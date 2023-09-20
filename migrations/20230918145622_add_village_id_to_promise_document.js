@@ -4,7 +4,7 @@
  */
 exports.up = function(knex) {
 	return knex.schema.alterTable("promise_document", (table) => {
-		table.integer("village_id").nullable()
+		table.integer("village_id").nullable().alter();
 	})
 };
 
