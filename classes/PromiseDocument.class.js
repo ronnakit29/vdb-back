@@ -60,7 +60,7 @@ class PromiseDocument {
 	async sum(whereAttr, betweenDate = { start: null, end: null }, field) {
 		try {
 			const result = await this.knex(this.tableName).where(whereAttr).sum(`${field} as sum`);
-			if (betweenDate.start && betweenDate.end) {
+			if (betweenDate?.start && betweenDate?.end) {
 				const result = await this.knex(this.tableName).where(whereAttr).whereBetween('datetime', [moment(betweenDate.start).toDate(), moment(betweenDate.end).toDate()]).sum(`${field} as sum`);
 				return result[0].sum || 0;
 			}

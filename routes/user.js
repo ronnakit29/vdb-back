@@ -65,4 +65,14 @@ router.post('/create', async (req, res) => {
 		return res.status(500).json({ success: false, error: error.message });
 	}
 });
+router.post('/delete', async (req, res) => {
+	try {
+		const { id } = req.body;
+		const result = await user.delete(id);
+		return res.status(200).json({ success: true, data: result });
+	} catch (error) {
+		console.error(error);
+		return res.status(500).json({ success: false, error: error.message });
+	}
+});
 module.exports = router;

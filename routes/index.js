@@ -3,6 +3,7 @@ const router = express.Router();
 
 // Define your routes here
 
+router.use('/analysis', require('./analysis.js'));
 router.use('/read-citizen-card', require('./read-citizen-card'));
 router.use('/member', require('./member'));
 router.use('/auth', require('./auth'));
