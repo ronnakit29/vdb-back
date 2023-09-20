@@ -12,7 +12,7 @@ services:
   nodejs-app:
     build: .
     ports:
-      - "3312:3312"
+      - "3323:3323"
     volumes:
       - ./app:/app
     environment:
