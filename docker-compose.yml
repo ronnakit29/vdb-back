@@ -25,4 +25,12 @@ services:
       - MASTER_KEY=${MASTER_KEY}
     depends_on:
       - db
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    links:
+      - db
   
