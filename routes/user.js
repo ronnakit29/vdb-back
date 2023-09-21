@@ -54,7 +54,7 @@ router.get('/list', acceptRole(["master", "manager"]), async (req, res) => {
 });
 router.post('/create', async (req, res) => {
 	try {
-		const currentUser = req;
+		const currentUser = req.user;
 		const { role, username, fullname, password, email, citizen_id, village_code } = req.body;
 		if (!village_code) throw new Error('village_code is required')
 		if (!citizen_id) throw new Error('citizen_id is required')

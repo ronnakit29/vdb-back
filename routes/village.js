@@ -7,7 +7,7 @@ const knex = require('../plugins/knex.js');
 
 const village = new Village(knex)
 router.use(verifyJWT);
-router.get('/', acceptRole(["manager", "master"]), async (req, res) => {
+router.get('/', acceptRole(["manager", "master", "employee"]), async (req, res) => {
 	try {
 		const params = {}
 		if (req.user.role !== 'master') {
