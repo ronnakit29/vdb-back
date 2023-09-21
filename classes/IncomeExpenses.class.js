@@ -1,3 +1,5 @@
+const Member = require("./Member.class");
+
 class IncomeExpenses {
 	constructor(knex) {
 		this.knex = knex;
@@ -73,8 +75,17 @@ class IncomeExpenses {
 			if (sort) {
 				query.orderBy(sort, sortBy);
 			}
+			const member = new Member(this.knex)
 			const results = await query.limit(limit);
-			return results;
+			const returnData = results.map(async (item) => {
+				const manager = await member.getFirstBy({ citizen_id: item.manager_citizen_id })
+				delete item.manager_citizen_id
+				return {
+					...item,
+					manager_name: manager.title_name + manager.first_name + ' ' + manager.last_name
+				}
+			});
+			return await Promise.all(returnData);
 		} catch (error) {
 			console.error(error);
 			throw error;
