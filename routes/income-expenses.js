@@ -53,8 +53,8 @@ router.post('/create', acceptRole(['manager', 'master']), async (req, res) => {
 			manager_citizen_id: req.body.citizen_id,
 		}
 		const user = new User(knex)
-		const checkManager = await user.getFirstBy({ citizen_id: req.body.citizen_id, role: "manager", village_code: req.user.village_code })
-		if (!checkManager) throw new Error('ไม่พบผู้ใช้งาน หรือผู้ใช้งานไม่ใช่ผู้จัดการ')
+		// const checkManager = await user.getFirstBy({ citizen_id: req.body.citizen_id, role: "manager", village_code: req.user.village_code })
+		// if (!checkManager) throw new Error('ไม่พบผู้ใช้งาน หรือผู้ใช้งานไม่ใช่ผู้จัดการ')
 		const result = await incomeExpenses.create(data);
 		return res.status(200).json({ success: true, data: result });
 	} catch (error) {
