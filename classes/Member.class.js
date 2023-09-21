@@ -37,7 +37,7 @@ class Member {
 			throw error;
 		}
 	}
-
+	//
 	async getOrCreate(whereAttr, data) {
 		try {
 			const checkData = await this.getFirstBy(whereAttr);
