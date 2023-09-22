@@ -9,6 +9,7 @@ services:
       - MYSQL_PASSWORD=${DB_PASSWORD}
     volumes:
       - ./db:/var/lib/mysql
+    restart: always
   nodejs-app:
     build: .
     ports:
@@ -25,6 +26,7 @@ services:
       - MASTER_KEY=${MASTER_KEY}
     depends_on:
       - db
+    restart: always
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
@@ -33,4 +35,4 @@ services:
       - db
     links:
       - db
-  
+    restart: always
