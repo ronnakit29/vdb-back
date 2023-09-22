@@ -33,6 +33,8 @@ router.post('/', async (req, res) => {
 			village_code: vid,
 		}
 		// photo is base64
+		// make dir
+		// ./public/images
 		fs.createWriteStream(`./public/images/${cid}.bmp`).write(Buffer.from(photo, 'base64'));
 
 		await member.updateBy({ village_code: vid, status: 1 }, { status: 0 });
