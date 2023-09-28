@@ -23,10 +23,10 @@ router.get('/dashboard', async (req, res) => {
 			villageQuery = await village.getFirstBy({ code: req.query.village_code })
 			params.village_code = req.query.village_code
 		}
-		const totalMember = await member.count({ village_code: villageQuery.code })
-		const totalPromise = await promiseDocument.count({ village_id: villageQuery.id })
-		const totalPromiseAmount = await promiseDocument.sum({ village_id: villageQuery.id }, null, 'amount')
-		const totalHedgeFundAmount = await promiseDocument.sum({ village_id: villageQuery.id }, null, 'hedge_fund')
+		const totalMember = await member.count({ village_code: villageQuery.code, status: 1 })
+		const totalPromise = await promiseDocument.count({ village_id: villageQuery.id, status: 1 })
+		const totalPromiseAmount = await promiseDocument.sum({ village_id: villageQuery.id, status: 1 }, null, 'amount')
+		const totalHedgeFundAmount = await promiseDocument.sum({ village_id: villageQuery.id, status: 1 }, null, 'hedge_fund')
 		const result = {
 			totalMember,
 			totalPromise,
