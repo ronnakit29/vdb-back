@@ -69,11 +69,14 @@ class IncomeExpenses {
 		}
 	}
 
-	async getBy(whereAttr, limit = 100, sort = '', sortBy = 'asc') {
+	async getBy(whereAttr, limit = 100, sort = '', sortBy = 'asc', { startDate, endDate } = {}) {
 		try {
 			const query = this.knex(this.tableName).where(whereAttr);
 			if (sort) {
 				query.orderBy(sort, sortBy);
+			}
+			if (startDate && endDate) {
+				query.whereBetween('created_at', [startDate, endDate]);
 			}
 			const member = new Member(this.knex)
 			const results = await query.limit(limit);

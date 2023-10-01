@@ -24,14 +24,14 @@ router.get('/', acceptRole(['employee', 'manager', 'manager']), async (req, res)
 router.get('/list', acceptRole(['employee', 'manager', 'master']), async (req, res) => {
 	try {
 		const { vid } = req.query;
-		const { limit, sort, sortBy } = req.query;
+		const { limit, sort, sortBy, startDate, endDate } = req.query;
 		const params = {}
 		if (req.user.role !== 'master') {
 			params.village_id = req.user.village.id
 		} else {
 			params.village_id = vid
 		}
-		const result = await incomeExpenses.getBy(params, limit, sort || "id", sortBy || "desc");
+		const result = await incomeExpenses.getBy(params, limit, sort || "id", sortBy || "desc", { startDate, endDate });
 		return res.status(200).json({ success: true, data: result });
 	} catch (error) {
 		console.error(error);
