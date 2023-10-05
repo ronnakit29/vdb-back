@@ -38,6 +38,7 @@ router.get('/dashboard', async (req, res) => {
 			return res.status(200).json({ success: true, data: result });
 		} else {
 			if (!req.query.village_code) throw new Error('กรุณาเลือกหมู่บ้าน')
+			if (!villageQuery) throw new Error('กรุณาเลือกหมู่บ้าน')
 			const totalMember = await member.count({ village_code: villageQuery.code, status: 1 })
 			const totalPromise = await promiseDocument.count({ village_id: villageQuery.id, status: 1 })
 			const totalPromiseAmount = await promiseDocument.sum({ village_id: villageQuery.id, status: 1 }, null, 'amount')
