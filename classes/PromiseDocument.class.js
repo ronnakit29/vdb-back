@@ -150,8 +150,16 @@ class PromiseDocument {
 	async acceptPromiseDocument(groupId) {
 		try {
 			const checkDistince = await this.getFirstBy({ group_id: groupId });
-			if (!(checkDistince.witness1_citizen_id && checkDistince.witness2_citizen_id && checkDistince.manager_citizen_id && checkDistince.employee_citizen_id)) {
+			if (!(checkDistince.manager_citizen_id && checkDistince.employee_citizen_id)) {
 				throw new Error('ข้อมูลบางอย่างไม่ครบถ้วน โปรดตรวจสอบ');
+			}
+			if (checkDistince.status !== 0) {
+				throw new Error('สัญญากู้นี้ได้รับการยืนยันแล้ว');
+			}
+			if (checkDistince.guarantee_type === "guarantor") {
+				if (!(checkDistince.witness1_citizen_id && checkDistince.witness2_citizen_id)) {
+					throw new Error('ข้อมูลผู้ค้ำประกันไม่ครบถ้วน โปรดตรวจสอบ');
+				}
 			}
 			const response = await this.update({ group_id: groupId }, { status: 1 })
 			return response
@@ -298,6 +306,8 @@ class PromiseDocument {
 				period: data.period,
 				age: data.age,
 				type: data.type,
+				guarantee_type: data.guarantee_type,
+				guarantee_value: data.guarantee_value,
 			}
 			const result = await this.knex(this.tableName).insert(dataForm);
 			return await this.getById(result[0]);
