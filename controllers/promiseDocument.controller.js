@@ -20,7 +20,9 @@ exports.checkCitizenPromiseListByCitizenID = async (req, res) => {
 	try {
 		const { citizen_id } = req.params;
 		const result = await promiseDocument.getBy({ 'promise_document.citizen_id': citizen_id }, 1000, 'id', 'desc', null, {});
-		return res.status(200).json({ success: true, data: result });
+		const withness1Query = await promiseDocument.getBy({ 'promise_document.witness1_citizen_id': citizen_id, 'promise_document.status': 1 }, 1000, 'id', 'desc', null, {});
+		const withness2Query = await promiseDocument.getBy({ 'promise_document.witness2_citizen_id': citizen_id, 'promise_document.status': 1 }, 1000, 'id', 'desc', null, {});
+		return res.status(200).json({ success: true, data: result, guarantee: [...withness1Query, ...withness2Query] });
 	} catch (error) {
 		console.error(error);
 		return res.status(500).json({ success: false, error: error.message });
