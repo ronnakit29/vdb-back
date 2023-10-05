@@ -31,7 +31,9 @@ exports.analysisPromiseByTypeAndDate = async (req, res) => {
 	try {
 		const { village, role } = req.user;
 		const { type, startDate, endDate, vid } = req.query;
-		const params = {}
+		const params = {
+			status: 1
+		}
 		if (role !== 'master') {
 			params.village_id = village.id
 		} else {
