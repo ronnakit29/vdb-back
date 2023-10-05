@@ -23,7 +23,7 @@ router.get('/dashboard', async (req, res) => {
 			villageQuery = await village.getFirstBy({ code: req.query.village_code })
 			params.village_code = req.query.village_code
 		}
-		if (req.user.role !== 'master') {
+		if (role !== 'master') {
 			if (!villageQuery) throw new Error('ไม่พบหมู่บ้าน')
 			const totalMember = await member.count({ village_code: villageQuery.code, status: 1 })
 			const totalPromise = await promiseDocument.count({ village_id: villageQuery.id, status: 1 })
@@ -37,7 +37,7 @@ router.get('/dashboard', async (req, res) => {
 			}
 			return res.status(200).json({ success: true, data: result });
 		} else {
-			if (!village_code) throw new Error('กรุณาเลือกหมู่บ้าน')
+			if (!req.query.village_code) throw new Error('กรุณาเลือกหมู่บ้าน')
 			const totalMember = await member.count({ village_code: villageQuery.code, status: 1 })
 			const totalPromise = await promiseDocument.count({ village_id: villageQuery.id, status: 1 })
 			const totalPromiseAmount = await promiseDocument.sum({ village_id: villageQuery.id, status: 1 }, null, 'amount')
