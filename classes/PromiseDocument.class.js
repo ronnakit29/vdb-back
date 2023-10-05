@@ -1,5 +1,6 @@
 const Helper = require("./Helper.class");
 const Member = require("./Member.class");
+const PromiseYear = require("./PromiseYear.class");
 const Village = require("./Village.class");
 const moment = require("moment");
 class PromiseDocument {
@@ -281,10 +282,14 @@ class PromiseDocument {
 
 			const village = new Village(this.knex);
 			const checkVillage = await village.getFirstBy({ code: data.village_code }, true);
+			const checkLastPromise = await this.getBy({ village_id: checkVillage.id }, 1, 'running_number', 'desc', ['running_number'], {});
+			const runningNumber = checkLastPromise?.[0]?.running_number ? checkLastPromise[0].running_number + 1 : 1;
+			const promiseYear = new PromiseYear(this.knex);
+			const checkPromiseYear = await promiseYear.getFirstBy({ village_id: checkVillage.id, year: moment().year() + 543 });
 			const dataForm = {
 				citizen_id: data.citizen_id,
-				running_number: data.running_number || 0,
-				promise_year: moment().year() + 543,
+				running_number: runningNumber,
+				promise_year: checkPromiseYear.year,
 				datetime: moment().toDate(),
 				village_id: checkVillage.id,
 				reason: data.reason || '',

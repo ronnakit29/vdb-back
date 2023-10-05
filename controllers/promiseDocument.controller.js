@@ -19,7 +19,7 @@ exports.createPromiseDocument = async (req, res) => {
 exports.checkCitizenPromiseListByCitizenID = async (req, res) => {
 	try {
 		const { citizen_id } = req.params;
-		const result = await promiseDocument.getBy({ citizen_id: citizen_id }, 1000, 'id', 'desc');
+		const result = await promiseDocument.getBy({ 'promise_document.citizen_id': citizen_id }, 1000, 'id', 'desc', null, {});
 		return res.status(200).json({ success: true, data: result });
 	} catch (error) {
 		console.error(error);
