@@ -48,6 +48,7 @@ router.post('/create', acceptRole(['manager', 'master']), async (req, res) => {
 			income: req.body.income,
 			expense: req.body.expense,
 			withdraw_value: req.body.withdraw_value,
+			withdraw_all: req.body.withdraw_all || 0,
 			user_id: id,
 			village_id: village.id,
 			manager_citizen_id: req.body.citizen_id,
@@ -63,7 +64,7 @@ router.post('/create', acceptRole(['manager', 'master']), async (req, res) => {
 	}
 });
 
-router.post('/delete', acceptRole(['employee', 'manager', 'master']), async (req, res) => {
+router.post('/delete', acceptRole(['manager', 'master']), async (req, res) => {
 	try {
 		const { id } = req.body;
 		const { village } = req.user;
