@@ -10,6 +10,7 @@ const promiseYear = new PromiseYear(knex)
 router.use(verifyJWT)
 router.get('/', async (req, res) => {
 	try {
+		if (!req?.user?.village?.id) throw new Error('หมู่บ้านของผู้ใช้งานนี้ไม่ได้ถูกตั้งค่าไว้')
 		const result = await promiseYear.getFirstBy({
 			village_id: req.user.village.id,
 		});
