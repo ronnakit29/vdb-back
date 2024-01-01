@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
 	}
 });
 
-router.post('/', acceptRole(["master", "manageer"]), async (req, res) => {
+router.post('/', acceptRole(["master", "manager"]), async (req, res) => {
 	try {
 		if (!req.user?.village?.id) throw new Error('ไม่พบหมู่บ้าน')
 		const result = await promiseYear.update({ village_id: req.user.village.id }, {
