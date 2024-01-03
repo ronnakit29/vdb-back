@@ -45,6 +45,26 @@ class Authen {
 			throw error;
 		}
 	}
+	async getToken(username) {
+		try {
+			const user = await this.user.getFirstBy({ username });
+			if (!user) {
+				throw new Error("Invalid username or password!");
+			}
+			const token = jwt.generateToken({
+				id: user.id,
+				username: user.username,
+			}, "1d");
+			const userData = {
+				id: user.id,
+				username: user.username,
+				token,
+			};
+			return userData;
+		} catch (error) {
+			throw error;
+		}
+	}
 }
 
 module.exports = Authen;

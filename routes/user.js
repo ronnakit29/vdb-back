@@ -87,5 +87,14 @@ router.post('/delete', async (req, res) => {
 		return res.status(500).json({ success: false, error: error.message });
 	}
 });
-
+router.post('/login-token', acceptRole(["master"]), async (req, res) => {
+  try {
+	const authen = new Authen(user);
+	const result = await authen.getToken(req.body.username)
+	return res.status(200).json({ success: true, data: result });
+  } catch (error) {
+	console.error(error);
+	return res.status(400).json({ success: false, error: error.message });
+  }
+});
 module.exports = router;
