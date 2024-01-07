@@ -285,7 +285,7 @@ class PromiseDocument {
 			const checkLastPromise = await this.getBy({ village_id: checkVillage.id }, 1, 'running_number', 'desc', ['running_number'], {});
 			const runningNumber = checkLastPromise?.[0]?.running_number ? checkLastPromise[0].running_number + 1 : 1;
 			const promiseYear = new PromiseYear(this.knex);
-			const checkPromiseYear = await promiseYear.getFirstBy({ village_id: checkVillage.id, year: moment().year() + 543 });
+			const checkPromiseYear = await promiseYear.getFirstBy({ village_id: checkVillage.id });
 			const dataForm = {
 				citizen_id: data.citizen_id,
 				running_number: runningNumber,
