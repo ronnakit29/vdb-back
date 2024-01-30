@@ -38,7 +38,7 @@ router.get('/list', acceptRole(['employee', 'manager', 'master']), async (req, r
 		return res.status(500).json({ success: false, error: error.message });
 	}
 })
-
+//
 router.get('/:id', async (req, res) => {
 	try {
 		const { id } = req.params;
