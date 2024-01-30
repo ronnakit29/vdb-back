@@ -58,6 +58,20 @@ class PromiseDocument {
 		}
 	}
 
+	async countDistinct(whereAttr, distinctField, betweenDate = { start: null, end: null }, field) {
+		try {
+			const result = await this.knex(this.tableName).where(whereAttr).countDistinct(`${distinctField} as count`);
+			if (betweenDate.start && betweenDate.end) {
+				const result = await this.knex(this.tableName).where(whereAttr).whereBetween('datetime', [moment(betweenDate.start).toDate(), moment(betweenDate.end).toDate()]).countDistinct(`${distinctField} as count`);
+				return result[0].count || 0;
+			}
+			return result[0].count || 0;
+		} catch (error) {
+			console.error(error);
+			throw error;
+		}
+	}
+
 	async sum(whereAttr, betweenDate = { start: null, end: null }, field) {
 		try {
 			const result = await this.knex(this.tableName).where(whereAttr).sum(`${field} as sum`);
@@ -206,7 +220,7 @@ class PromiseDocument {
 					witness2: await member.getFirstBy({ citizen_id: result.witness2_citizen_id }),
 					manager: await member.getFirstBy({ citizen_id: result.manager_citizen_id }),
 					employee: await member.getFirstBy({ citizen_id: result.employee_citizen_id }),
-					village:  await village.getFirstBy({ id: result.village_id }),
+					village: await village.getFirstBy({ id: result.village_id }),
 				}
 			})
 			return await Promise.all(fining)

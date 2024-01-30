@@ -43,10 +43,12 @@ exports.analysisPromiseByTypeAndDate = async (req, res) => {
 		}
 		if (type) params.type = type
 		const count = await promiseDocument.count(params, { start: startDate, end: endDate });
+		const countLoaner = await promiseDocument.countDistinct(params, "citizen_id", { start: startDate, end: endDate }, 'citizen_id');
 		const sum = await promiseDocument.sum(params, { start: startDate, end: endDate }, 'amount');
 		const hedge_fund = await promiseDocument.sum(params, { start: startDate, end: endDate }, 'hedge_fund');
 		return res.status(200).json({
 			success: true, data: {
+				countLoaner,
 				count,
 				sum,
 				hedge_fund

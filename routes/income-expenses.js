@@ -39,6 +39,18 @@ router.get('/list', acceptRole(['employee', 'manager', 'master']), async (req, r
 	}
 })
 
+router.get('/:id', async (req, res) => {
+	try {
+		const { id } = req.params;
+		const result = await incomeExpenses.getFirstBy({ id });
+		return res.status(200).json({ success: true, data: result });
+	} catch (error) {
+		console.error(error);
+		return res.status(500).json({ success: false, error: error.message });
+
+	}
+});
+
 router.post('/create', acceptRole(['manager', 'master']), async (req, res) => {
 	try {
 		const { village, id } = req.user;
@@ -52,10 +64,10 @@ router.post('/create', acceptRole(['manager', 'master']), async (req, res) => {
 			user_id: id,
 			village_id: village.id,
 			manager_citizen_id: req.body.citizen_id,
+			income_form: req.body.income_form,
+			expense_form: req.body.expense_form,
 		}
 		const user = new User(knex)
-		// const checkManager = await user.getFirstBy({ citizen_id: req.body.citizen_id, role: "manager", village_code: req.user.village_code })
-		// if (!checkManager) throw new Error('ไม่พบผู้ใช้งาน หรือผู้ใช้งานไม่ใช่ผู้จัดการ')
 		const result = await incomeExpenses.create(data);
 		return res.status(200).json({ success: true, data: result });
 	} catch (error) {
