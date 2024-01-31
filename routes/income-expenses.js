@@ -21,6 +21,17 @@ router.get('/', acceptRole(['employee', 'manager', 'manager']), async (req, res)
 	}
 });
 
+router.post('/cancel', async (req, res) => {
+	try {
+		const { id } = req.body;
+		const result = await incomeExpenses.update(id, { status: 'cancel' });
+		return res.status(200).json({ success: true, data: result });
+	} catch (error) {
+		console.error(error);
+		return res.status(400).json({ success: false, error: error.message });
+	}
+});
+
 router.get('/list', acceptRole(['employee', 'manager', 'master']), async (req, res) => {
 	try {
 		const { vid } = req.query;
