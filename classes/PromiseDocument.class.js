@@ -255,6 +255,7 @@ class PromiseDocument {
 			const newPromiseForm = promiseList.map(async (promise) => {
 				return await this.create({
 					...promiseData,
+					addon: promise.addon ? 1 : 0,
 					interest: promise.interest,
 					type: promise.type,
 					hedge_fund: promise.hedge_fund,
@@ -301,6 +302,7 @@ class PromiseDocument {
 			const promiseYear = new PromiseYear(this.knex);
 			const checkPromiseYear = await promiseYear.getFirstBy({ village_id: checkVillage.id });
 			const dataForm = {
+				addon: data.addon,
 				citizen_id: data.citizen_id,
 				running_number: runningNumber,
 				promise_year: checkPromiseYear.year,

@@ -75,6 +75,7 @@ class IncomeExpenses {
 			if (sort) {
 				query.orderBy(sort, sortBy);
 			}
+			console.log({ startDate, endDate })
 			if (startDate && endDate) {
 				query.whereBetween('created_at', [startDate, endDate]);
 			}

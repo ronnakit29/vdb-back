@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const JwtService = require("../classes/JwtService.class");
+const hashMD5 = require("../plugins/helper");
 const jwt = new JwtService(process.env.JWT_SECRET);
 
 class Authen {
@@ -26,6 +27,8 @@ class Authen {
 				username: user.username,
 				token,
 			};
+			const tokenHash = hashMD5(token);
+			await this.user.update(user.id, { token_hash: tokenHash })
 			return userData;
 		} catch (error) {
 			throw error;

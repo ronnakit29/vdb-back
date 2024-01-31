@@ -5,7 +5,7 @@ const verifyJWT = require('../middlewares/jwt');
 const acceptRole = require('../middlewares/acceptRole');
 const User = require('../classes/User.class');
 const router = express.Router();
-
+const moment = require('moment');
 // Define your routes here
 router.use(verifyJWT);
 const incomeExpenses = new IncomeExpenses(knex)
@@ -31,7 +31,7 @@ router.get('/list', acceptRole(['employee', 'manager', 'master']), async (req, r
 		} else {
 			params.village_id = vid
 		}
-		const result = await incomeExpenses.getBy(params, limit, sort || "id", sortBy || "desc", { startDate, endDate });
+		const result = await incomeExpenses.getBy(params, limit || 100, sort || "id", sortBy || "desc", { startDate: moment(startDate).startOf('day').format("YYYY-MM-DD HH:mm:ss"), endDate: moment(endDate).endOf('day').format("YYYY-MM-DD HH:mm:ss") });
 		return res.status(200).json({ success: true, data: result });
 	} catch (error) {
 		console.error(error);
