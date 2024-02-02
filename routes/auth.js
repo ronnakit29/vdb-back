@@ -28,8 +28,8 @@ router.post("/login", loginValidate, async (req, res) => {
 
 router.post("/register", masterKey, registerValidate, async (req, res) => {
 	try {
-		const { username, password, name, email } = req.body;
-		const result = await authen.register(username, password, name, email);
+		const { username, password, fullname, email, role, citizen_id, tel, village_code } = req.body;
+		const result = await authen.register(username, password, fullname, email, role, citizen_id, tel, village_code);
 		return res.status(201).json({ success: true, data: result });
 	} catch (error) {
 		console.error(error);
