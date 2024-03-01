@@ -7,8 +7,8 @@ const promiseDocument = new PromiseDocument(knex)
 exports.createPromiseDocument = async (req, res) => {
 	try {
 		const { village_code } = req.user;
-		const { promiseList, promiseData } = req.body;
-		const result = await promiseDocument.groupPromise(village_code, { promiseList, promiseData });
+		const { promiseList, promiseData, securities } = req.body;
+		const result = await promiseDocument.groupPromise(village_code, { promiseList, promiseData, securities });
 		return res.status(200).json({ success: true, data: result });
 	} catch (error) {
 		console.error(error);

@@ -12,5 +12,6 @@ router.use('/promise-document', require('./promise-document'));
 router.use('/income-expenses', require('./income-expenses'));
 router.use('/village', require('./village'));
 router.use('/promise-year', require('./promise-year'));
+router.use('/securities', require('./securities'));
 
 module.exports = router;

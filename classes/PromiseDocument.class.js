@@ -1,6 +1,7 @@
 const Helper = require("./Helper.class");
 const Member = require("./Member.class");
 const PromiseYear = require("./PromiseYear.class");
+const Securities = require("./Securities.class");
 const Village = require("./Village.class");
 const moment = require("moment");
 class PromiseDocument {
@@ -249,9 +250,10 @@ class PromiseDocument {
 			throw error;
 		}
 	}
-	async groupPromise(village_code, { promiseList, promiseData }) {
+	async groupPromise(village_code, { promiseList, promiseData, securities = {} }) {
 		try {
 			const groupId = Helper.randomString(10)
+			const { transport, land_number, exploer_page, title_deed_book, title_deed_page, title_deed_district, title_deed_province, area_rai, area_ngan, area_wa } = securities
 			const newPromiseForm = promiseList.map(async (promise) => {
 				return await this.create({
 					...promiseData,
@@ -264,6 +266,10 @@ class PromiseDocument {
 					village_code: village_code,
 				})
 			})
+			if (securities) {
+				const securitiesClass = new Securities(this.knex);
+				await securitiesClass.create({ member_id: promiseData.member_id, promise_document_group_id: groupId, transport, land_number, exploer_page, title_deed_book, title_deed_page, title_deed_district, title_deed_province, area_rai, area_ngan, area_wa })
+			}
 			return await Promise.all(newPromiseForm)
 		} catch (error) {
 			console.error(error);

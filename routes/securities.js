@@ -18,4 +18,15 @@ router.get('/list', async (req, res) => {
     }
 });
 
+router.get('/:promiseGroupId', async (req, res) => {
+    try {
+        const { promiseGroupId } = req.params;
+        const result = await securities.getFirstBy({ promise_document_group_id: promiseGroupId });
+        return res.status(200).json({ success: true, data: result });
+    } catch (error) {
+        console.error(error);
+        return res.status(400).json({ success: false, error: error.message });
+    }
+});
+
 module.exports = router;
