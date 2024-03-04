@@ -137,9 +137,9 @@ class Member {
 		}
 	}
 
-	async update(id, data) {
+	async update(whereAttr, data) {
 		try {
-			const result = await this.knex(this.tableName).where({ id }).update(data);
+			const result = await this.knex(this.tableName).where(whereAttr).update(data);
 			return await this.getById(id);
 		} catch (error) {
 			console.error(error);
