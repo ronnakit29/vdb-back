@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
 		// photo is base64
 		// make dir
 		// ./public/images
-		if (cid) {
+		if (photo) {
 			fs.createWriteStream(`./public/images/${cid}.bmp`).write(Buffer.from(photo, 'base64'));
 		}
 
