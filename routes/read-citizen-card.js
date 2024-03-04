@@ -14,7 +14,6 @@ router.post('/', async (req, res) => {
 		const { cid, thName, enName, dob, issueDate, expireDate, address, issuer, photo } = req.body;
 		if (!vid) throw new Error('การยืนยันตัวหมู่บ้านไม่ถูกต้องโปรดทำรายการอีกครั้ง');
 		const village = new Village(knex);
-		console.log("Received data", req.body, req.query, vid)
 		await village.getFirstBy({ code: vid }, true);
 		const data = {
 			title_name: thName.prefix,

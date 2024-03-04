@@ -16,7 +16,6 @@ router.get('/read-from-card', async (req, res) => {
 		const result = await member.getFirstBy({ status: 1, village_code });
 		// check create_at 1 30 sec
 		if (result) {
-			console.log(result)
 			const diffCheck = moment().diff(moment(result.created_at), 'seconds');
 			if (diffCheck > 30) {
 				return res.status(200).json({ success: false, data: null });
