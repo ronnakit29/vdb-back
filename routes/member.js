@@ -11,7 +11,7 @@ router.use(verifyJWT);
 router.get('/read-from-card', async (req, res) => {
 	try {
 		const { village_code } = req.user;
-		console.log(req.user)
+		// console.log(req.user)
 		if(!village_code) throw new Error('ไม่พบข้อมูลหมู่บ้าน')
 		const result = await member.getFirstBy({ status: 1, village_code });
 		// check create_at 1 30 sec
