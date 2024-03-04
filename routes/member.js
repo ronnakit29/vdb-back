@@ -12,7 +12,7 @@ router.get('/read-from-card', async (req, res) => {
 	try {
 		const { village_code } = req.user;
 		// console.log(req.user)
-		if(!village_code) throw new Error('ไม่พบข้อมูลหมู่บ้าน')
+		if (!village_code) throw new Error('ไม่พบข้อมูลหมู่บ้าน')
 		const result = await member.getFirstBy({ status: 1, village_code });
 		// check create_at 1 30 sec
 		if (result) {
@@ -20,7 +20,7 @@ router.get('/read-from-card', async (req, res) => {
 			if (diffCheck > 30) {
 				return res.status(200).json({ success: false, data: null });
 			}
-			await member.update(result.id, { status: 0 });
+			await member.update({ id: result.id }, { status: 0 });
 			return res.status(200).json({ success: true, data: result });
 		} else {
 			return res.status(200).json({ success: false, data: null });
