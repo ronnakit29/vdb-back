@@ -1,7 +1,7 @@
 class Member {
 	constructor(knex) {
 		this.knex = knex;
-		this.tableName = 'member'; 
+		this.tableName = 'member';
 	}
 
 	async getAll(limit = 100, sort = '', sortBy = 'asc') {
@@ -56,10 +56,10 @@ class Member {
 		try {
 			const checkData = await this.getFirstBy(whereAttr);
 			if (checkData) {
-				const result = await this.update(checkData.id, data);
+				const result = await this.update(whereAttr, data);
 				return result;
 			}
-			const result = await this.create({ ...data, ...whereAttr });
+			const result = await this.create({ ...whereAttr, ...data });
 			return result;
 		} catch (error) {
 			console.error(error);
@@ -91,7 +91,7 @@ class Member {
 		}
 	}
 
- async getFirstBy(whereAttr) {
+	async getFirstBy(whereAttr) {
 		try {
 			const result = await this.knex(this.tableName).where(whereAttr).first();
 			return result;
