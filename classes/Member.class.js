@@ -140,7 +140,7 @@ class Member {
 	async update(whereAttr, data) {
 		try {
 			const result = await this.knex(this.tableName).where(whereAttr).update(data);
-			return await this.getById(id);
+			return await this.getFirstBy(whereAttr);
 		} catch (error) {
 			console.error(error);
 			throw error;
