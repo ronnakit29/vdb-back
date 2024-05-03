@@ -78,6 +78,8 @@ router.post('/create', acceptRole(['manager', 'master']), async (req, res) => {
 			income_form: req.body.income_form,
 			expense_form: req.body.expense_form,
 			financial_status_form: req.body.financial_status_form,
+			file: req.body.file,
+			banking_value: req.body.banking_value,
 		}
 		const user = new User(knex)
 		const result = await incomeExpenses.create(data);

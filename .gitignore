@@ -3,3 +3,4 @@ node_modules
 public/images/*
 dist
 db.config.json
+public/uploads/*
