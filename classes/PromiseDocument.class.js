@@ -157,7 +157,7 @@ class PromiseDocument {
 	}
 	async endPromiseDocument(groupId) {
 		try {
-			const response = await this.update({ group_id: groupId }, { status: 2 })
+			const response = await this.update({ group_id: groupId }, { status: 2, end_time: moment().toDate()})
 			return response
 		} catch (error) {
 			throw error;
