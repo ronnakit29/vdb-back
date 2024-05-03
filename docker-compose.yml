@@ -16,6 +16,7 @@ services:
       - "3323:3323"
     volumes:
       - ./app:/app
+      - ./public/uploads:/app/public/uploads
     environment:
       - DB_HOST=${DB_HOST}
       - DB_USER=${DB_USER}
