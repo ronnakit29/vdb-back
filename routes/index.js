@@ -14,5 +14,6 @@ router.use('/village', require('./village'));
 router.use('/promise-year', require('./promise-year'));
 router.use('/securities', require('./securities'));
 router.use('/upload', require('./upload'));
+router.use('/permission', require('./permission'));
 
 module.exports = router;

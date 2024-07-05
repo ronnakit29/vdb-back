@@ -3,7 +3,7 @@
  * @returns { Promise<void> }
  */
 exports.up = function (knex) {
-	return knex.schema.createTable('promise_year', table => {
+	return knex.schema.createTableIfNotExists('promise_year', table => {
 		table.increments('id').primary();
 		table.string('year').defaultTo('2566')
 		table.integer('village_id')
