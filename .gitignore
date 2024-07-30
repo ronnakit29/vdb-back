@@ -1,6 +1,4 @@
 node_modules
-.env*
-public/images/*
+.env
 dist
 db.config.json
-public/uploads/*
